@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Редактировать город";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model HW4.Models.City
+<h2>Город № @Model.id</h2>
+<form method="post">
+    <fieldset>
+        @Html.HiddenFor(m => m.id)
+        <p>
+            @Html.LabelFor(m => m.name, "Название города")
+            <br />
+            @Html.EditorFor(m => m.name)
+        </p>
+        <p><input type="submit" value="Отправить" /></p>
+    </fieldset>
+</form>

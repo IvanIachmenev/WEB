@@ -1,0 +1,47 @@
+﻿@model HW5.ViewModels.IndexViewModel
+
+@{
+    ViewData["Title"] = "Add new perfume";
+}
+
+@using (Html.BeginForm("AddNewWater", "Water", FormMethod.Post))
+{
+    <div>
+
+        <p>
+            <label for="brand">Select water brand</label>
+            <select name="BrandId" id="brand">
+                @foreach (Brand brand in Model.Brands)
+                {
+                    <option value="@brand.Id">@brand.Name</option>
+                }
+            </select>
+        </p>
+
+        <p>
+            @Html.Label("name", "Enter water name")
+            @Html.TextBox("name", "Slavda")
+        </p>
+
+        <p>
+            @Html.Label("volume", "Enter water volume")
+            @Html.TextBox("volume", "30", new { type = "number" })
+        </p>
+
+        <p>
+            @Html.Label("price", "Enter water price")
+            @Html.TextBox("price", "7500", new { type = "number" })
+        </p>
+
+        <p>
+            @Html.Label("count", "Enter water count")
+            @Html.TextBox("count", "10", new { type = "number" })
+        </p>
+
+
+        <span class="col-md-offset-2 col-md-10">
+            <button type="submit" value="Submit" name="Submit">Submit</button>
+            <button type="submit" value="Cancel" name="Cancel">Cancel</button>
+        </span>
+    </div>
+}

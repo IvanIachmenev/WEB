@@ -1,0 +1,25 @@
+﻿@model HW4.Models.Pilot
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Новая книга</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(model => model.name, "Имя пилота")
+    <br />
+    @Html.EditorFor(model => model.name)
+    <br />
+    @Html.LabelFor(model => model.company, "Компания")
+    <br />
+    @Html.EditorFor(model => model.company)
+    <br />
+    @Html.LabelFor(model => model.exp, "Стаж")
+    <br />
+    @Html.EditorFor(model => model.exp)
+    <br />
+    <br />
+    <input type="submit" value="Добавить" />
+}

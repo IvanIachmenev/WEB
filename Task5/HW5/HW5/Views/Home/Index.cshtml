@@ -1,0 +1,31 @@
+﻿@model HW5.ViewModels.IndexViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+@using (Html.BeginForm("Index", "Home", FormMethod.Post))
+{
+    <label>Select brand: </label>
+    <select name="brandId" class="form-control">
+        @foreach (Brand brand in ViewBag.Brands)
+        {
+            <option value="@brand.Id">@brand.Name</option>
+            //<option value="@brand.Id">@brand.Name</option>
+        }
+    </select>
+    <input type="submit" />
+}
+
+<table class="table">
+    @foreach (var water in Model.Waters)
+    {
+        <tr>
+            <td>@water.Name</td>
+            <td>
+                @String.Format("{0} hours, {1} minutes, {2} seconds, {3} milliseconds",
+                    water.LifeTime.Hours, water.LifeTime.Minutes, water.LifeTime.Seconds, water.LifeTime.Milliseconds)
+            </td>
+            <td>@water.Price</td>
+            <td>@water.Brand.Name</td>
+        </tr>
+    }
+</table>

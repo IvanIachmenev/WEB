@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Редактировать пилота";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model HW4.Models.Pilot
+<h2>Пилот № @Model.id</h2>
+<form method="post">
+    <fieldset>
+        @Html.HiddenFor(m => m.id)
+        <p>
+            @Html.LabelFor(m => m.name, "Имя пилота")
+            <br />
+            @Html.EditorFor(m => m.name)
+            <br />
+            @Html.LabelFor(m => m.company, "Компания")
+            <br />
+            @Html.EditorFor(m => m.company)
+            <br />
+            @Html.LabelFor(m => m.exp, "Стаж")
+            <br />
+            @Html.EditorFor(m => m.exp)
+        </p>
+        <p><input type="submit" value="Отправить" /></p>
+    </fieldset>
+</form>

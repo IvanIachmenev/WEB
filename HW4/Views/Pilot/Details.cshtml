@@ -1,0 +1,30 @@
+﻿@model HW4.Models.Pilot
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Пилот</h2>
+
+<table width="60%">
+    <tr>
+        <td align="center">Имя</td>
+        <td align="center">Компания</td>
+        <td align="center">Стаж(лет)</td>
+    </tr>
+    <tr>
+        <td align="center">
+            @Html.DisplayFor(e => e.name)
+        </td>
+        <td align="center">
+            @Html.DisplayFor(e => e.company)
+        </td>
+        <td align="center">
+            @Html.DisplayFor(e => e.exp)
+        </td>
+    </tr>
+</table>
+<div>
+
+</div>
