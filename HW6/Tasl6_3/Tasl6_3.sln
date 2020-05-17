@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tasl6_3", "Tasl6_3\Tasl6_3.csproj", "{4132D6E5-19CC-4ADF-A81B-1106FC48F937}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4132D6E5-19CC-4ADF-A81B-1106FC48F937}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4132D6E5-19CC-4ADF-A81B-1106FC48F937}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4132D6E5-19CC-4ADF-A81B-1106FC48F937}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4132D6E5-19CC-4ADF-A81B-1106FC48F937}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E7DE8412-AF4C-4645-A985-A0B53D25DA98}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "ExplicitLoadingIndex";
+}
+
+<h2>Explicit loading</h2>
+
+<table width="100%" class="table table-striped table-bordered table-hover">
+    <tr>
+        <th>Mobile</th>
+        <th>Brand</th>
+    </tr>
+
+    @foreach (var mobile in Model)
+    {
+        <tr>
+            <td>@mobile.Name</td>
+            <td>@mobile.Brand?.Name</td>
+        </tr>
+    }
+</table>
