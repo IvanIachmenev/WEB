@@ -1,31 +1,92 @@
-﻿@model HW5.ViewModels.IndexViewModel
+﻿@using HW5.Models
+@model IndexViewModel
+
 @{
     ViewData["Title"] = "Home Page";
 }
-@using (Html.BeginForm("Index", "Home", FormMethod.Post))
-{
-    <label>Select brand: </label>
-    <select name="brandId" class="form-control">
-        @foreach (Brand brand in ViewBag.Brands)
-        {
-            <option value="@brand.Id">@brand.Name</option>
-            //<option value="@brand.Id">@brand.Name</option>
-        }
-    </select>
-    <input type="submit" />
-}
+<h1>Список пользователей</h1>
+<form method="get">
+    <div class="form-inline">
+        <label>Имя: </label>
+        <input name="name" value="@Model.FilterViewModel.SelectedName" class="form-control" />
+
+        <label>Компания: </label>
+        <select name="company" asp-items="Model.FilterViewModel.Companies" class="form-control"></select>
+
+        <input type="submit" value="Фильтр" class="btn btn-outline-dark" />
+    </div>
+</form>
 
 <table class="table">
-    @foreach (var water in Model.Waters)
+    <tr>
+        <th>
+            <a asp-action="Index"
+               asp-route-sortOrder="@(Model.SortViewModel.CategorySort)"
+               asp-route-name="@(Model.FilterViewModel.SelectedName)"
+               asp-route-company="@(Model.FilterViewModel.SelectedCompany)">Категория</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.BrandSort)"
+               asp-route-name="@(Model.FilterViewModel.SelectedName)"
+               asp-route-company="@(Model.FilterViewModel.SelectedCompany)">Бренд</a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@(Model.SortViewModel.AmountSort)"
+               asp-route-name="@(Model.FilterViewModel.SelectedName)"
+               asp-route-company="@(Model.FilterViewModel.SelectedCompany)">Кол-во</a>
+        </th>
+        <th>
+            <a>Days</a>
+        </th>
+        <th>
+            <a>Hours</a>
+        </th>
+        <th>
+            <a>Minutes</a>
+        </th>
+        <th>
+            <a>Seconds</a>
+        </th>
+
+    </tr>
+    @foreach (var u in Model.Users)
     {
         <tr>
-            <td>@water.Name</td>
-            <td>
-                @String.Format("{0} hours, {1} minutes, {2} seconds, {3} milliseconds",
-                    water.LifeTime.Hours, water.LifeTime.Minutes, water.LifeTime.Seconds, water.LifeTime.Milliseconds)
-            </td>
-            <td>@water.Price</td>
-            <td>@water.Brand.Name</td>
+            <td>@u.Category</td>
+            <td>@u.Brand.Name</td>
+            <td>@u.Amount</td>
+            <td>@u.LifeTime.Days</td>
+            <td>@u.LifeTime.Hours</td>
+            <td>@u.LifeTime.Minutes</td>
+            <td>@u.LifeTime.Seconds</td>
         </tr>
     }
 </table>
+@if (Model.PageViewModel.HasPreviousPage)
+{
+    <a asp-action="Index"
+       asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+       asp-route-name="@(Model.FilterViewModel.SelectedName)"
+       asp-route-company="@(Model.FilterViewModel.SelectedCompany)"
+       asp-route-sortorder="@(Model.SortViewModel.Current)"
+       class="btn  btn-outline-dark">
+        <i class="glyphicon glyphicon-chevron-left"></i>
+        Назад
+    </a>
+}
+@if (Model.PageViewModel.HasNextPage)
+{
+    <a asp-action="Index"
+       asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+       asp-route-name="@(Model.FilterViewModel.SelectedName)"
+       asp-route-company="@(Model.FilterViewModel.SelectedCompany)"
+       asp-route-sortorder="@(Model.SortViewModel.Current)"
+       class="btn btn-outline-dark">
+        Вперед
+        <i class="glyphicon glyphicon-chevron-right"></i>
+    </a>
+}
+@using (Html.BeginForm("Add", null, FormMethod.Get))
+{
+    <button type="submit">Add product</button>
+}

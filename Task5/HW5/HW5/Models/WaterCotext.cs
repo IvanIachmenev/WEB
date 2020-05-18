@@ -15,7 +15,7 @@ namespace HW5.Models
             : base(options)
         {
             
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

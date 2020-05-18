@@ -1,0 +1,49 @@
+﻿@model MobileShop.Models.Mobile
+@{
+    ViewBag.Title = "Edit mobile";
+}
+<form asp-antiforgery="true" asp-action="edit" asp-controller="home">
+    <div>
+        <div class="validation" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group row">
+            <label asp-for="Name" class="col-form-label col-sm-1 text-md-right font-weight-bold">Name:</label>
+            <div class="col-sm-6">
+                <input type="text" asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Diagonal" class="col-form-label col-sm-1 text-md-right font-weight-bold">Diagonal:</label>
+            <div class="col-sm-6">
+                <input type="number" asp-for="Diagonal" class="form-control" />
+                <span asp-validation-for="Diagonal"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="Yaer" class="col-form-label col-sm-1 text-md-right font-weight-bold">Yaer:</label>
+            <div class="col-sm-6">
+                <input type="number" asp-for="Yaer" class="form-control" />
+                <span asp-validation-for="Yaer"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label asp-for="ManufacturerId" class="col-form-label col-sm-1 text-md-right font-weight-bold">Manufacturer: </label>
+            <div class="col-sm-6">
+                <select asp-for="ManufacturerId" asp-items="@ViewBag.Select" class="form-control">
+                    <option value="">Select manufacturer</option>
+                </select>
+                <span asp-validation-for="ManufacturerId"></span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-1 text-md-right">
+                <input type="submit" value="Send" class="btn btn-primary font-weight-bold" role="button" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@section scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

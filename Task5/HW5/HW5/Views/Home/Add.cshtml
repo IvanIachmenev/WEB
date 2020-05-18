@@ -1,0 +1,26 @@
+﻿@model HW5.Models.MobileTemp
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New toy:</h2>
+
+@using (Html.BeginForm("Add", "Home", FormMethod.Post))
+{
+    @Html.LabelFor(model => model.Category, "Category")
+    <br />
+    @Html.EditorFor(model => model.Category)
+    <br />
+    @Html.LabelFor(model => model.Amount, "Amount")
+    <br />
+    @Html.EditorFor(model => model.Amount)
+    <br />
+    @Html.LabelFor(model => model.Brand.Name, "Brand")
+    <br />
+    @Html.EditorFor(model => model.Brand.Name)
+    <br />
+    <br />
+    <button type="submit" value="Add" name="Add"> Add </button>
+    <button type="submit" value="Back" name="Back"> Back </button>
+}

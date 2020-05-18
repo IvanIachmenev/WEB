@@ -1,0 +1,31 @@
+﻿@model MobileShop.Models.DetailsViewModel
+@{
+    ViewBag.Title = Model.Mobile.Name;
+}
+<h2>Mobile - @Model.Mobile.Name</h2>
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Diagonal</th>
+        <th>Year</th>
+        <th>Brand</th>
+        <th>Country</th>
+    </tr>
+    <tr>
+        <td>@Model.Mobile.Id</td>
+        <td>@Model.Mobile.Diagonal</td>
+        <td>@Model.Mobile.Yaer</td>
+        <td>@Model.Select.Manufacturer.FirstOrDefault(x => x.Selected).Text</td>
+        <td>@Model.Mobile.Manufacturer.Country</td>
+    </tr>
+    <tr>
+        @if (ViewBag.CL >= 2)
+        {
+            <td><a asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Mobile.Id" class="btn btn-primary" role="button">Edit</a></td>
+        }
+        @if (ViewBag.CL == 3)
+        {
+            <td><a asp-controller="Home" asp-action="Delete" asp-route-id="@Model.Mobile.Id" class="btn btn-primary" role="button">Delete</a></td>
+        }
+    </tr>
+</table>

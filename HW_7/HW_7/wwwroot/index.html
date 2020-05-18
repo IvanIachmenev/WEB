@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Список телефонов</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <h2>Список телефонов</h2>
+    <form name="mobileForm">
+        <input type="hidden" name="id" value="0" />
+        <div class="form-group col-md-5">
+            <label for="Name">Name:</label>
+            <input class="form-control" name="Name" />
+        </div>
+        <div class="form-group col-md-5">
+            <label for="Brand">Brand:</label>
+            <input class="form-control" name="Brand" />
+        </div>
+        <div class="form-group col-md-5">
+            <label for="Amount">Amount:</label>
+            <input class="form-control" name="Amount" type="number" />
+        </div>
+        <div class="panel-body">
+            <button type="submit" id="submit" class="btn btn-primary">Сохранить</button>
+            <a id="reset" class="btn btn-primary">Сбросить</a>
+        </div>
+    </form>
+    <table class="table table-condensed table-striped  col-md-6">
+        <thead><tr><th>Id</th><th>Name</th><th>Brand</th><th>Amount</th><th></th></tr></thead>
+        <tbody>
+        </tbody>
+    </table>
+    <script>
+        // Получение всех пользователей
+        async function GetAll() {
+            // отправляет запрос и получаем ответ
+            const response = await fetch("/api/mobile", {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            // если запрос прошел нормально
+            if (response.ok === true) {
+                // получаем данные
+                const mobile = await response.json();
+                let rows = document.querySelector("tbody");
+                mobile.forEach(mobile => {
+                    // добавляем полученные элементы в таблицу
+                    rows.append(row(mobile));
+                });
+            }
+        }
+        // Получение одного пользователя
+        async function GetById(id) {
+            const response = await fetch("/api/mobile/" + id, {
+                method: "GET",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                const mobile = await response.json();
+                const form = document.forms["mobileForm"];
+                form.elements["id"].value = mobile.id;
+                form.elements["Name"].value = mobile.name;
+                form.elements["Brand"].value = mobile.brand;
+                form.elements["Amount"].value = mobile.amount;
+            }
+        }
+        // Добавление пользователя
+        async function CreateUser(mobileName, mobileBrand, mobileAmount) {
+
+            const response = await fetch("api/mobile", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    Name: mobileName,
+                    Brand: mobileBrand,
+                    Amount: parseInt(mobileAmount, 10)
+                })
+            });
+            if (response.ok === true) {
+                const mobile = await response.json();
+                reset();
+                document.querySelector("tbody").append(row(mobile));
+            }
+        }
+        // Изменение пользователя
+        async function EditUser(mobileId, mobileName, mobileBrand, mobileAmount) {
+            const response = await fetch("api/mobile", {
+                method: "PUT",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    Id: parseInt(mobileId, 10),
+                    mobile: mobileName,
+                    Brand: mobileBrand,
+                    Amount: parseInt(mobileAmount, 10)
+                })
+            });
+            if (response.ok === true) {
+                const mobile = await response.json();
+                reset();
+                document.querySelector("tr[data-rowid='" + mobile.id + "']").replaceWith(row(mobile));
+            }
+        }
+        // Удаление пользователя
+        async function DeleteUser(id) {
+            const response = await fetch("/api/mobile/" + id, {
+                method: "DELETE",
+                headers: { "Accept": "application/json" }
+            });
+            if (response.ok === true) {
+                const mobile = await response.json();
+                document.querySelector("tr[data-rowid='" + mobile.id + "']").remove();
+            }
+        }
+
+        // сброс формы
+        function reset() {
+            const form = document.forms["mobileForm"];
+            form.reset();
+            form.elements["id"].value = 0;
+        }
+        // создание строки для таблицы
+        function row(mobile) {
+
+            const tr = document.createElement("tr");
+            tr.setAttribute("data-rowid", mobile.Id);
+
+            const idTd = document.createElement("td");
+            idTd.append(mobile.id);
+            tr.append(idTd);
+
+            const NameTd = document.createElement("td");
+            NameTd.append(mobile.name);
+            tr.append(NameTd);
+
+            const BrandTd = document.createElement("td");
+            BrandTd.append(mobile.brand);
+            tr.append(BrandTd);
+
+            const AmountTd = document.createElement("td");
+            AmountTd.append(mobile.amount);
+            tr.append(AmountTd);
+
+            const linksTd = document.createElement("td");
+
+            const editLink = document.createElement("a");
+            editLink.setAttribute("data-id", mobile.id);
+            editLink.setAttribute("style", "cursor:pointer;padding:15px;");
+            editLink.append("Изменить");
+            editLink.addEventListener("click", e => {
+
+                e.preventDefault();
+                GetById(mobile.id);
+            });
+            linksTd.append(editLink);
+
+            const removeLink = document.createElement("a");
+            removeLink.setAttribute("data-id", mobile.id);
+            removeLink.setAttribute("style", "cursor:pointer;padding:15px;");
+            removeLink.append("Удалить");
+            removeLink.addEventListener("click", e => {
+
+                e.preventDefault();
+                DeleteUser(mobile.id);
+            });
+
+            linksTd.append(removeLink);
+            tr.appendChild(linksTd);
+
+            return tr;
+        }
+        // сброс значений формы
+        document.getElementById("reset").click(function (e) {
+
+            e.preventDefault();
+            reset();
+        })
+
+        // отправка формы
+        document.forms["mobileForm"].addEventListener("submit", e => {
+            e.preventDefault();
+            const form = document.forms["mobileForm"];
+            const id = form.elements["id"].value;
+            const Name = form.elements["Name"].value;
+            const Brand = form.elements["Brand"].value;
+            const Amount = form.elements["Amount"].value;
+            if (id == 0)
+                CreateUser(Name, Brand, Amount);
+            else
+                EditUser(id, Name, Brand, Amount);
+        });
+
+        // загрузка пользователей
+        GetAll();
+
+    </script>
+</body>
+</html>
